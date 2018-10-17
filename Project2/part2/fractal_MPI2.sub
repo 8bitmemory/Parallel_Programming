@@ -1,0 +1,18 @@
+#!/bin/bash
+#SBATCH -A CS4380_5351_7332 # account name
+#SBATCH -J p2_fractal2      # job name
+#SBATCH -o p2_fractal2.%j   # name of the output and error file
+#SBATCH -N 1                # total number of nodes requested
+#SBATCH -n 2                # total number of tasks requested
+#SBATCH -p gpu              # queue name
+#SBATCH -t 00:02:00         # expected maximum runtime (hh:mm:ss)
+
+date
+
+ibrun ./fractal_MPI 512 50
+ibrun ./fractal_MPI 512 100
+ibrun ./fractal_MPI 1024 50
+ibrun ./fractal_MPI 1024 100
+
+date
+

@@ -1,0 +1,21 @@
+#!/bin/bash
+#SBATCH -A CS4380_5351_7332 # account name
+#SBATCH -J p2_collatz8      # job name
+#SBATCH -o p2_collatz8.%j   # name of the output and error file
+#SBATCH -N 1                # total number of nodes requested
+#SBATCH -n 8                # total number of tasks requested
+#SBATCH -p gpu              # queue name
+#SBATCH -t 00:02:00         # expected maximum runtime (hh:mm:ss)
+
+date
+
+ibrun ./collatz_MPI_cyclic 1000000
+ibrun ./collatz_MPI_cyclic 10000000
+ibrun ./collatz_MPI_cyclic 100000000
+
+ibrun ./collatz_MPI_blocked 1000000
+ibrun ./collatz_MPI_blocked 10000000
+ibrun ./collatz_MPI_blocked 100000000
+
+date
+

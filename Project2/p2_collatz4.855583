@@ -1,0 +1,56 @@
+Wed Oct  3 14:08:15 CDT 2018
+TACC: Starting up job 855583
+TACC: Setting up parallel environment for MVAPICH2+mpispawn.
+TACC: Starting parallel tasks...
+Collatz v1.0
+range: 1, ..., 1000000
+compute time: 0.088 s
+longest sequence: 525 elements
+ 
+TACC: Shutdown complete. Exiting.
+TACC: Starting up job 855583
+TACC: Setting up parallel environment for MVAPICH2+mpispawn.
+TACC: Starting parallel tasks...
+Collatz v1.0
+range: 1, ..., 10000000
+compute time: 1.021 s
+longest sequence: 686 elements
+ 
+TACC: Shutdown complete. Exiting.
+TACC: Starting up job 855583
+TACC: Setting up parallel environment for MVAPICH2+mpispawn.
+TACC: Starting parallel tasks...
+Collatz v1.0
+range: 1, ..., 100000000
+compute time: 11.813 s
+longest sequence: 950 elements
+ 
+TACC: Shutdown complete. Exiting.
+TACC: Starting up job 855583
+TACC: Setting up parallel environment for MVAPICH2+mpispawn.
+TACC: Starting parallel tasks...
+Collatz v1.0
+range: 1, ..., 1000000
+compute time: 0.086 s
+longest sequence: 525 elements
+ 
+TACC: Shutdown complete. Exiting.
+TACC: Starting up job 855583
+TACC: Setting up parallel environment for MVAPICH2+mpispawn.
+TACC: Starting parallel tasks...
+Collatz v1.0
+range: 1, ..., 10000000
+compute time: 0.999 s
+longest sequence: 686 elements
+ 
+TACC: Shutdown complete. Exiting.
+TACC: Starting up job 855583
+TACC: Setting up parallel environment for MVAPICH2+mpispawn.
+TACC: Starting parallel tasks...
+Collatz v1.0
+range: 1, ..., 100000000
+compute time: 11.456 s
+longest sequence: 950 elements
+ 
+TACC: Shutdown complete. Exiting.
+Wed Oct  3 14:08:47 CDT 2018
