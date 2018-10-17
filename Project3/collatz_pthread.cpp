@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
 
   // initialize pthread variables
   pthread_t* const handle = new pthread_t[threads - 1];
-  dyn_Array = new dyn_Array[threads];
+  dyn_Array = new int[threads];
 
   // start time
   timeval start, end;
