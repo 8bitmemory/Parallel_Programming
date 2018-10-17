@@ -30,11 +30,11 @@ Author: Martin Burtscher
 // shared variables
 static long threads;
 static long range;
-//static int maxlen;
-static pthread_mutex_t mutex;
+static int * dyn_Array;
 
 static void* collatz(void* arg)
 {
+  int maxlen;
   // determine work for each thread
   const long my_rank = (long)arg;
   const long beg = my_rank * range / threads;
@@ -58,18 +58,19 @@ static void* collatz(void* arg)
 
   // reduction
   if (maxlen < ml) {
-    pthread_mutex_lock(&mutex);
+ 
     if (maxlen < ml) {
       maxlen = ml;
     }
-    pthread_mutex_unlock(&mutex);
+    
   }
-
+  dyn_Array[my_rank]=maxlen;
   return NULL;
 }
 
 int main(int argc, char *argv[])
 {
+  int maxlen;
   printf("Collatz v1.0\n");
 
   // check command line
@@ -82,8 +83,8 @@ int main(int argc, char *argv[])
   printf("threads: %ld\n", threads);
 
   // initialize pthread variables
-  pthread_mutex_init(&mutex, NULL);
   pthread_t* const handle = new pthread_t[threads - 1];
+  dyn_Array = new dyn_Array[threads];
 
   // start time
   timeval start, end;
@@ -104,16 +105,22 @@ int main(int argc, char *argv[])
     pthread_join(handle[thread], NULL);
   }
 
+//
+  for(long thread = 0; thread < threads - 1; thread++){
+    if(maxlen < dyn_Array[thread])maxlen = dyn_Array[thread];
+  }
+
   // end time
   gettimeofday(&end, NULL);
   const double runtime = end.tv_sec - start.tv_sec + (end.tv_usec - start.tv_usec) / 1000000.0;
   printf("compute time: %.3f s\n", runtime);
 
+  //deallocate the dynamic array
+  delete [] dyn_Array;
   // print result
   printf("longest sequence: %d elements\n\n", maxlen);
 
   // clean up
-  pthread_mutex_destroy(&mutex);
   delete [] handle;
   return 0;
 }
