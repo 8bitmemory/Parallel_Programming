@@ -30,7 +30,7 @@ Author: Martin Burtscher
 // shared variables
 static long threads;
 static long range;
-static int maxlen;
+//static int maxlen;
 static pthread_mutex_t mutex;
 
 static void* collatz(void* arg)
