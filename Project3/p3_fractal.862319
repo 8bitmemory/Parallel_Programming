@@ -1,0 +1,9 @@
+Thu Oct 18 08:39:55 CDT 2018
+Fractal v1.7
+computing 100 frames of 512 by 512 fractal
+threads: 1
+compute time: 12.381 s
+Fractal v1.7
+computing 100 frames of 512 by 512 fractal
+threads: 2
+compute time: 6.321 s
