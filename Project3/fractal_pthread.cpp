@@ -35,7 +35,7 @@ static const double yMid =  0.55267;
 static int threads;
 static int frames;
 static int width;
-unsigned char* pic;
+static unsigned char* pic;
 
 static void * fractal(void *arg)
 {
@@ -122,6 +122,7 @@ int main(int argc, char *argv[])
   }
 
   delete [] pic;
+  delete [] handle;
   return 0;
 }
 
