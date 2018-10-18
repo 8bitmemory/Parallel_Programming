@@ -32,7 +32,7 @@ static const double Delta = 0.004;
 static const double xMid =  0.2389;
 static const double yMid =  0.55267;
 
-static long threads;
+static int threads;
 static int frames;
 static int width;
 
