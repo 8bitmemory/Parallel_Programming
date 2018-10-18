@@ -35,6 +35,7 @@ static const double yMid =  0.55267;
 static int threads;
 static int frames;
 static int width;
+unsigned char* pic;
 
 static void * fractal(void *arg)
 {
@@ -84,7 +85,7 @@ int main(int argc, char *argv[])
   printf("threads: %ld\n", threads);
 
   // allocate picture array
-  unsigned char* pic = new unsigned char[frames * width * width];
+  pic = new unsigned char[frames * width * width];
 
   // intiallize pthread variables
   pthread_t* const handle = new pthread_t[threads - 1];
