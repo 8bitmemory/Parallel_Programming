@@ -24,6 +24,7 @@ Author: Martin Burtscher
 
 #include <cstdlib>
 #include <cmath>
+#include <pthread.h>
 #include <sys/time.h>
 #include "cs43805351.h"
 
@@ -31,10 +32,16 @@ static const double Delta = 0.004;
 static const double xMid =  0.2389;
 static const double yMid =  0.55267;
 
-static void fractal(const int width, const int frames, unsigned char* pic)
+static long threads;
+static int frames;
+static int width;
+
+static void * fractal(void *arg)
 {
+  // determine work for each thread
+  const long my_rank = (long)arg;
   // compute frames
-  for (int frame = 0; frame < frames; frame++) {
+  for (int frame = my_rank; frame < frames; frame+=threads) {
     const double delta = Delta * pow(0.98, frame);
     const double xMin = xMid - delta;
     const double yMin = yMid - delta;
@@ -58,6 +65,7 @@ static void fractal(const int width, const int frames, unsigned char* pic)
       }
     }
   }
+  return NULL;
 }
 
 int main(int argc, char *argv[])
@@ -66,20 +74,37 @@ int main(int argc, char *argv[])
 
   // check command line
   if (argc != 3) {fprintf(stderr, "usage: %s frame_width num_frames\n", argv[0]); exit(-1);}
-  const int width = atoi(argv[1]);
+  width = atoi(argv[1]);
   if (width < 10) {fprintf(stderr, "error: frame_width must be at least 10\n"); exit(-1);}
-  const int frames = atoi(argv[2]);
+  frames = atoi(argv[2]);
   if (frames < 1) {fprintf(stderr, "error: num_frames must be at least 1\n"); exit(-1);}
   printf("computing %d frames of %d by %d fractal\n", frames, width, width);
+  threads = atai(argv[3]);
+  if(threads < 1) {fprintf(stderr, "error: threads must be at least 1\n"); exit(-1);}
+  printf("threads: %ld\n", threads);
 
   // allocate picture array
   unsigned char* pic = new unsigned char[frames * width * width];
+
+  // intiallize pthread variables
+  pthread_t* const handle = new pthread_t[threads - 1];
 
   // start time
   timeval start, end;
   gettimeofday(&start, NULL);
 
-  fractal(width, frames, pic);
+    // launch threads
+  for (long thread = 0; thread < threads - 1; thread++) {
+    pthread_create(&handle[thread], NULL, fractal, (void *)thread);
+  }
+
+  // work for master
+  fractal((void*)(threads-1));
+
+  // join threads
+  for (long thread = 0; thread < threads - 1; thread++) {
+    pthread_join(handle[thread], NULL);
+  }
 
   // end time
   gettimeofday(&end, NULL);
