@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
   frames = atoi(argv[2]);
   if (frames < 1) {fprintf(stderr, "error: num_frames must be at least 1\n"); exit(-1);}
   printf("computing %d frames of %d by %d fractal\n", frames, width, width);
-  threads = atai(argv[3]);
+  threads = atoi(argv[3]);
   if(threads < 1) {fprintf(stderr, "error: threads must be at least 1\n"); exit(-1);}
   printf("threads: %ld\n", threads);
 
