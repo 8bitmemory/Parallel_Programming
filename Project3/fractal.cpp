@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
   printf("Fractal v1.7\n");
 
   // check command line
-  if (argc != 3) {fprintf(stderr, "usage: %s frame_width num_frames\n", argv[0]); exit(-1);}
+  if (argc != 4) {fprintf(stderr, "usage: %s frame_width num_frames\n", argv[0]); exit(-1);}
   width = atoi(argv[1]);
   if (width < 10) {fprintf(stderr, "error: frame_width must be at least 10\n"); exit(-1);}
   frames = atoi(argv[2]);
