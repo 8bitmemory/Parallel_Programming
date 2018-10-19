@@ -1,0 +1,82 @@
+Thu Oct 18 13:44:40 CDT 2018
+Fractal v1.7
+computing 100 frames of 512 by 512 fractal
+threads: 1
+compute time: 12.392 s
+Fractal v1.7
+computing 100 frames of 512 by 512 fractal
+threads: 2
+compute time: 6.403 s
+Fractal v1.7
+computing 100 frames of 512 by 512 fractal
+threads: 3
+compute time: 4.355 s
+Fractal v1.7
+computing 100 frames of 512 by 512 fractal
+threads: 4
+compute time: 3.256 s
+Fractal v1.7
+computing 100 frames of 512 by 512 fractal
+threads: 5
+compute time: 2.646 s
+Fractal v1.7
+computing 100 frames of 512 by 512 fractal
+threads: 6
+compute time: 2.259 s
+Fractal v1.7
+computing 100 frames of 512 by 512 fractal
+threads: 7
+compute time: 2.020 s
+Fractal v1.7
+computing 100 frames of 512 by 512 fractal
+threads: 8
+compute time: 1.767 s
+Fractal v1.7
+computing 100 frames of 512 by 512 fractal
+threads: 9
+compute time: 1.690 s
+Fractal v1.7
+computing 100 frames of 512 by 512 fractal
+threads: 10
+compute time: 1.420 s
+Fractal v1.7
+computing 100 frames of 512 by 512 fractal
+threads: 11
+compute time: 1.406 s
+Fractal v1.7
+computing 100 frames of 512 by 512 fractal
+threads: 12
+compute time: 1.288 s
+Fractal v1.7
+computing 100 frames of 512 by 512 fractal
+threads: 13
+compute time: 1.156 s
+Fractal v1.7
+computing 100 frames of 512 by 512 fractal
+threads: 14
+compute time: 1.142 s
+Fractal v1.7
+computing 100 frames of 512 by 512 fractal
+threads: 15
+compute time: 1.014 s
+Fractal v1.7
+computing 100 frames of 512 by 512 fractal
+threads: 16
+compute time: 1.001 s
+Fractal v1.7
+computing 100 frames of 512 by 512 fractal
+threads: 17
+compute time: 0.870 s
+Fractal v1.7
+computing 100 frames of 512 by 512 fractal
+threads: 18
+compute time: 0.867 s
+Fractal v1.7
+computing 100 frames of 512 by 512 fractal
+threads: 19
+compute time: 0.863 s
+Fractal v1.7
+computing 100 frames of 512 by 512 fractal
+threads: 20
+compute time: 1.045 s
+Thu Oct 18 13:45:29 CDT 2018
