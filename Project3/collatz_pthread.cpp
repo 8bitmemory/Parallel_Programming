@@ -26,7 +26,7 @@ Author: Martin Burtscher
 #include <cstdio>
 #include <pthread.h>
 #include <sys/time.h>
-
+// this is new
 // shared variables
 static long threads;
 static long range;
