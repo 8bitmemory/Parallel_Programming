@@ -1,0 +1,25 @@
+#!/bin/bash
+#SBATCH -A CS4380_5351_7332 # account name
+#SBATCH -J p4_fractal       # job name
+#SBATCH -o p4_fractal.%j    # name of the output and error file
+#SBATCH -N 1                # total number of nodes requested
+#SBATCH -n 1                # total number of tasks requested
+#SBATCH -p gpu              # queue name
+#SBATCH -t 00:02:30         # expected maximum runtime (hh:mm:ss)
+
+date
+
+./fractal_omp1 2048 25
+./fractal_omp1 2048 50
+./fractal_omp1 2048 100
+
+./fractal_omp2 2048 25
+./fractal_omp2 2048 50
+./fractal_omp2 2048 100
+
+./fractal_omp3 2048 25
+./fractal_omp3 2048 50
+./fractal_omp3 2048 100
+
+date
+
