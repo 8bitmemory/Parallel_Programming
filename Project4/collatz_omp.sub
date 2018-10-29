@@ -1,0 +1,167 @@
+#!/bin/bash
+#SBATCH -A CS4380_5351_7332 # account name
+#SBATCH -J p4_collatz       # job name
+#SBATCH -o p4_collatz.%j    # name of the output and error file
+#SBATCH -N 1                # total number of nodes requested
+#SBATCH -n 1                # total number of tasks requested
+#SBATCH -p gpu              # queue name
+#SBATCH -t 00:04:30         # expected maximum runtime (hh:mm:ss)
+
+date
+
+icc -xhost -O3 -openmp collatz_omp.cpp -o collatz_omp -DSCHED=""
+
+./collatz_omp 20000000 1
+./collatz_omp 20000000 2
+./collatz_omp 20000000 3
+./collatz_omp 20000000 4
+./collatz_omp 20000000 5
+./collatz_omp 20000000 6
+./collatz_omp 20000000 7
+./collatz_omp 20000000 8
+./collatz_omp 20000000 9
+./collatz_omp 20000000 10
+./collatz_omp 20000000 11
+./collatz_omp 20000000 12
+./collatz_omp 20000000 13
+./collatz_omp 20000000 14
+./collatz_omp 20000000 15
+./collatz_omp 20000000 16
+./collatz_omp 20000000 17
+./collatz_omp 20000000 18
+./collatz_omp 20000000 19
+
+icc -xhost -O3 -openmp collatz_omp.cpp -o collatz_omp -DSCHED="schedule(static, 1)"
+
+./collatz_omp 20000000 1
+./collatz_omp 20000000 2
+./collatz_omp 20000000 3
+./collatz_omp 20000000 4
+./collatz_omp 20000000 5
+./collatz_omp 20000000 6
+./collatz_omp 20000000 7
+./collatz_omp 20000000 8
+./collatz_omp 20000000 9
+./collatz_omp 20000000 10
+./collatz_omp 20000000 11
+./collatz_omp 20000000 12
+./collatz_omp 20000000 13
+./collatz_omp 20000000 14
+./collatz_omp 20000000 15
+./collatz_omp 20000000 16
+./collatz_omp 20000000 17
+./collatz_omp 20000000 18
+./collatz_omp 20000000 19
+
+icc -xhost -O3 -openmp collatz_omp.cpp -o collatz_omp -DSCHED="schedule(static, 100)"
+
+./collatz_omp 20000000 1
+./collatz_omp 20000000 2
+./collatz_omp 20000000 3
+./collatz_omp 20000000 4
+./collatz_omp 20000000 5
+./collatz_omp 20000000 6
+./collatz_omp 20000000 7
+./collatz_omp 20000000 8
+./collatz_omp 20000000 9
+./collatz_omp 20000000 10
+./collatz_omp 20000000 11
+./collatz_omp 20000000 12
+./collatz_omp 20000000 13
+./collatz_omp 20000000 14
+./collatz_omp 20000000 15
+./collatz_omp 20000000 16
+./collatz_omp 20000000 17
+./collatz_omp 20000000 18
+./collatz_omp 20000000 19
+
+icc -xhost -O3 -openmp collatz_omp.cpp -o collatz_omp -DSCHED="schedule(dynamic, 1)"
+
+./collatz_omp 20000000 1
+./collatz_omp 20000000 2
+./collatz_omp 20000000 3
+./collatz_omp 20000000 4
+./collatz_omp 20000000 5
+./collatz_omp 20000000 6
+./collatz_omp 20000000 7
+./collatz_omp 20000000 8
+./collatz_omp 20000000 9
+./collatz_omp 20000000 10
+./collatz_omp 20000000 11
+./collatz_omp 20000000 12
+./collatz_omp 20000000 13
+./collatz_omp 20000000 14
+./collatz_omp 20000000 15
+./collatz_omp 20000000 16
+./collatz_omp 20000000 17
+./collatz_omp 20000000 18
+./collatz_omp 20000000 19
+
+icc -xhost -O3 -openmp collatz_omp.cpp -o collatz_omp -DSCHED="schedule(dynamic, 100)"
+
+./collatz_omp 20000000 1
+./collatz_omp 20000000 2
+./collatz_omp 20000000 3
+./collatz_omp 20000000 4
+./collatz_omp 20000000 5
+./collatz_omp 20000000 6
+./collatz_omp 20000000 7
+./collatz_omp 20000000 8
+./collatz_omp 20000000 9
+./collatz_omp 20000000 10
+./collatz_omp 20000000 11
+./collatz_omp 20000000 12
+./collatz_omp 20000000 13
+./collatz_omp 20000000 14
+./collatz_omp 20000000 15
+./collatz_omp 20000000 16
+./collatz_omp 20000000 17
+./collatz_omp 20000000 18
+./collatz_omp 20000000 19
+
+icc -xhost -O3 -openmp collatz_omp.cpp -o collatz_omp -DSCHED="schedule(guided, 1)"
+
+./collatz_omp 20000000 1
+./collatz_omp 20000000 2
+./collatz_omp 20000000 3
+./collatz_omp 20000000 4
+./collatz_omp 20000000 5
+./collatz_omp 20000000 6
+./collatz_omp 20000000 7
+./collatz_omp 20000000 8
+./collatz_omp 20000000 9
+./collatz_omp 20000000 10
+./collatz_omp 20000000 11
+./collatz_omp 20000000 12
+./collatz_omp 20000000 13
+./collatz_omp 20000000 14
+./collatz_omp 20000000 15
+./collatz_omp 20000000 16
+./collatz_omp 20000000 17
+./collatz_omp 20000000 18
+./collatz_omp 20000000 19
+
+icc -xhost -O3 -openmp collatz_omp.cpp -o collatz_omp -DSCHED="schedule(guided, 100)"
+
+./collatz_omp 20000000 1
+./collatz_omp 20000000 2
+./collatz_omp 20000000 3
+./collatz_omp 20000000 4
+./collatz_omp 20000000 5
+./collatz_omp 20000000 6
+./collatz_omp 20000000 7
+./collatz_omp 20000000 8
+./collatz_omp 20000000 9
+./collatz_omp 20000000 10
+./collatz_omp 20000000 11
+./collatz_omp 20000000 12
+./collatz_omp 20000000 13
+./collatz_omp 20000000 14
+./collatz_omp 20000000 15
+./collatz_omp 20000000 16
+./collatz_omp 20000000 17
+./collatz_omp 20000000 18
+./collatz_omp 20000000 19
+
+date
+
