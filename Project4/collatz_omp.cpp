@@ -26,12 +26,11 @@ Author: Martin Burtscher
 #include <cstdio>
 #include <sys/time.h>
 
-static int collatz(const long range, const long threads)
-{
+static int collatz(const long range, const long threads){
   // compute sequence lengths
   int maxlen = 0;
 
-# pragma omp parallel for num_threads(threads) reduction(+:maxlen) SCHED{
+#  pragma omp parallel for num_threads(threads) default(none) private(maxlen) shared(threads) SCHED
   for (long i = 1; i <= range; i++) {
     long val = i;
     int len = 1;
@@ -47,7 +46,6 @@ static int collatz(const long range, const long threads)
   }
 
   return maxlen;
-}
 }
 
 int main(int argc, char *argv[])
@@ -67,7 +65,6 @@ int main(int argc, char *argv[])
   timeval start, end;
   gettimeofday(&start, NULL);
 
-# pragme omp parallel num_threads(threads)
   const int maxlen = collatz(range, threads);
 
   // end time
