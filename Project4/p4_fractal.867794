@@ -1,0 +1,17 @@
+Mon Oct 29 21:05:51 CDT 2018
+Fractal v1.7
+computing 25 frames of 2048 by 2048 fractal
+compute time: 4.753 s
+Fractal v1.7
+computing 50 frames of 2048 by 2048 fractal
+compute time: 7.203 s
+Fractal v1.7
+computing 100 frames of 2048 by 2048 fractal
+compute time: 14.201 s
+Fractal v1.7
+computing 25 frames of 2048 by 2048 fractal
+compute time: 50.589 s
+Fractal v1.7
+computing 50 frames of 2048 by 2048 fractal
+compute time: 97.722 s
+slurmstepd: error: *** JOB 867794 ON c221-803 CANCELLED AT 2018-10-29T21:09:01 DUE TO TIME LIMIT ***
