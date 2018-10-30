@@ -33,7 +33,7 @@ static const double yMid =  0.55267;
 
 static void fractal(const int width, const int frames, unsigned char* pic)
 {
-# pragma omp parallel default(none) shared(Delta, xMid, yMid, pic, width, frames){
+# pragma omp parallel default(none) shared(Delta, xMid, yMid, pic, width, frames)
   // compute frames
   for (int frame = 0; frame < frames; frame++) {
     const double delta = Delta * pow(0.98, frame);
@@ -60,7 +60,6 @@ static void fractal(const int width, const int frames, unsigned char* pic)
       }
     }
   }
-}
 }
 
 int main(int argc, char *argv[])
