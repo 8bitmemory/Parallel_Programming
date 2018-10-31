@@ -25,12 +25,12 @@ Author: Martin Burtscher
 #include <cstdlib>
 #include <cstdio>
 #include <sys/time.h>
-
+//Garrett#7861 discord
 static int collatz(const long range, const long threads){
   // compute sequence lengths
   int maxlen = 0;
 
-#  pragma omp parallel for num_threads(threads) default(none) reduction(+:maxlen) SCHED
+#  pragma omp parallel for num_threads(threads) default(none) reduction(max:maxlen) SCHED
   for (long i = 1; i <= range; i++) {
     long val = i;
     int len = 1;
