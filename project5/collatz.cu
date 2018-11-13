@@ -25,6 +25,7 @@ Author: Martin Burtscher
 #include <cstdlib>
 #include <cstdio>
 #include <sys/time.h>
+#include <cuda.h>
 
 static int collatz(const long range)
 {
