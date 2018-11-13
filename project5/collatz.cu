@@ -27,6 +27,8 @@ Author: Martin Burtscher
 #include <sys/time.h>
 #include <cuda.h>
 
+static const int ThreadsPerBlock = 512;
+
 static int collatz(const long range)
 {
   // compute sequence lengths
