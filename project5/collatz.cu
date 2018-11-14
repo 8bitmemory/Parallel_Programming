@@ -80,8 +80,8 @@ int main(int argc, char *argv[])
 
   // alloc space for host copies of a, b, c and setup input values
   int* h_maxlen = new int;
-  int* h_range = new int;
-  *maxlen = 0;
+  const long* h_range = new int;
+  *d_maxlen = 0;
   *h_range = &range;
 
   // copy inputs to device
@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
   gettimeofday(&start, NULL);
 
   //launch GPU kernel
-  addKernel<<<(ThreadsPerBlock + range - 1)/ThreadsPerBlock,ThreadsPerBlock>>>(d_range, d_maxlen);
+  collatzKernel<<<(ThreadsPerBlock + range - 1)/ThreadsPerBlock,ThreadsPerBlock>>>(d_range, d_maxlen);
   cudaDeviceSynchronize();
 
   // end time

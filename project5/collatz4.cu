@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
   gettimeofday(&start, NULL);
 
   //launch GPU kernel
-  addKernel<<<(ThreadsPerBlock + range - 1)/ThreadsPerBlock,ThreadsPerBlock>>>(d_range, d_maxlen);
+  collatzKernel<<<(ThreadsPerBlock + range - 1)/ThreadsPerBlock,ThreadsPerBlock>>>(d_range, d_maxlen);
   cudaDeviceSynchronize();
 
   // end time
