@@ -48,7 +48,7 @@ static __global__ void collatzKernel(int * range, int * maxlen)
     } else {
       val = 3 * val + 1;  // odd
     }
-    if(localMax < len){localMax = len}
+    if(localMax < len){localMax = len;}
   }
   if (*maxlen < localMax)atomicMax(maxlen,localMax);
 
@@ -87,9 +87,9 @@ int main(int argc, char *argv[])
 
   // alloc space for host copies of a, b, c and setup input values
   int* h_maxlen = new int;
-  int* h_range = new int;
+  const long* h_range = new int;
   *maxlen = 0;
-  *h_range = &range;
+  h_range = &range;
 
   // copy inputs to device
   if (cudaSuccess != cudaMemcpy(d_maxlen, h_maxlen, size, cudaMemcpyHostToDevice)) {fprintf(stderr, "copying to device failed\n"); exit(-1);};
