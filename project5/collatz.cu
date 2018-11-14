@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
 
   // alloc space for host copies of a, b, c and setup input values
   int* h_maxlen = new int;
-  int* h_range = new int;
+  const int* h_range = new int;
   *d_maxlen = 0;
   h_range = &range;
 
