@@ -44,7 +44,7 @@ static __global__ void collatzKernel(int * range, int * maxlen)
     } else {
       val = 3 * val + 1;  // odd
     }
-    }
+  }
   if (*maxlen < len)atomicMax(maxlen,len);
 
 }
@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
   printf("range: 1, ..., %ld\n", range);
 
   
-  // alloc space for device copies of a, b, c
+  // alloc space for device copies of maxlen and range
   int* d_maxlen;
   int* d_range;
   const int size = sizeof(int);
@@ -79,19 +79,21 @@ int main(int argc, char *argv[])
 
 
   // alloc space for host copies of a, b, c and setup input values
-  int* maxlen = new int;
+  int* h_maxlen = new int;
+  int* h_range = new int;
   *maxlen = 0;
+  *h_range = &range;
 
   // copy inputs to device
-  if (cudaSuccess != cudaMemcpy(d_maxlen, maxlen, size, cudaMemcpyHostToDevice)) {fprintf(stderr, "copying to device failed\n"); exit(-1);};
-  if (cudaSuccess != cudaMemcpy(d_range, range, size, cudaMemcpyHostToDevice)) {fprintf(stderr, "copying to device failed\n"); exit(-1);};
+  if (cudaSuccess != cudaMemcpy(d_maxlen, h_maxlen, size, cudaMemcpyHostToDevice)) {fprintf(stderr, "copying to device failed\n"); exit(-1);};
+  if (cudaSuccess != cudaMemcpy(d_range, h_range, size, cudaMemcpyHostToDevice)) {fprintf(stderr, "copying to device failed\n"); exit(-1);};
   
 
   // start time
   timeval start, end;
   gettimeofday(&start, NULL);
 
-  //kernel launch
+  //launch GPU kernel
   addKernel<<<(ThreadsPerBlock + range)/ThreadsPerBlock,ThreadsPerBlock>>>(d_range, d_maxlen);
   cudaDeviceSynchronize();
 
@@ -101,12 +103,17 @@ int main(int argc, char *argv[])
   printf("compute time: %.3f s\n", runtime);
   CheckCuda();
 
+  // copy result back to host
+  if (cudaSuccess != cudaMemcpy(h_maxlen, d_maxlen, size, cudaMemcpyDeviceToHost)) {fprintf(stderr, "copying from device failed\n"); exit(-1);}
+
   // print result
-  printf("longest sequence: %d elements\n", *maxlen);
+  printf("longest sequence: %d elements\n", *h_maxlen);
 
   // clean up
-  delete maxlen;
+  delete h_maxlen;
+  delete h_range;
   cudaFree(d_maxlen);
+  cudaFree(d_range);
 
   return 0;
 }
