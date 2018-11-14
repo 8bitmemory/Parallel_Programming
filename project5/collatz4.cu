@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
   // alloc space for host copies of a, b, c and setup input values
   int* h_maxlen = new int;
   const long* h_range = new int;
-  *maxlen = 0;
+  *d_maxlen = 0;
   h_range = &range;
 
   // copy inputs to device
