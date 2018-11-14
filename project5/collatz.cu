@@ -36,7 +36,7 @@ static __global__ void collatzKernel(int * range, int * maxlen)
   long val = idx+1;
   int len = 1;
 
-  if(idx < range)
+  if(idx < *range)
   while (val != 1) {
     len++;
     if ((val % 2) == 0) {

@@ -27,16 +27,20 @@ Author: Martin Burtscher
 #include <sys/time.h>
 #include <cuda.h>
 
-static const int ThreadsPerBlock = 512;
+static const int ThreadsPerBlock = 512/4;
 
 static __global__ void collatzKernel(int * range, int * maxlen)
 {
   // compute sequence lengths
   const long idx = threadIdx.x + blockIdx.x * (long)blockDim.x;
-  long val = idx+1;
+  //idx = idx * 4 + 1;
+  long val = idx * 4 + 1;
+  long end = (idx + 1) * 4 + 1;
+  int localMax = 0;
   int len = 1;
 
-  if(idx < range)
+  if(val <= *range)
+  for(val; val < end; val++)
   while (val != 1) {
     len++;
     if ((val % 2) == 0) {
@@ -44,8 +48,9 @@ static __global__ void collatzKernel(int * range, int * maxlen)
     } else {
       val = 3 * val + 1;  // odd
     }
+    if(localMax < len){localMax = len}
   }
-  if (*maxlen < len)atomicMax(maxlen,len);
+  if (*maxlen < localMax)atomicMax(maxlen,localMax);
 
 }
 
@@ -67,6 +72,8 @@ int main(int argc, char *argv[])
   if (argc != 2) {fprintf(stderr, "usage: %s range\n", argv[0]); exit(-1);}
   const long range = atol(argv[1]);
   if (range < 1) {fprintf(stderr, "error: range must be at least 1\n"); exit(-1);}
+  printf("range: 1, ..., %ld\n", range);
+  if ((range%4) != 0) {fprintf(stderr, "error: range must be a multiple of 4\n"); exit(-1);}
   printf("range: 1, ..., %ld\n", range);
 
   
