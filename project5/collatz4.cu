@@ -34,20 +34,20 @@ static __global__ void collatzKernel(const long range, int * maxlen)
   // compute sequence lengths
   const long idx = threadIdx.x + blockIdx.x * (long)blockDim.x;
   int localMax = 0;
-  int len = 1;
 
   if(idx <= (range/4))
   for(int i = idx +1; i <= range; i+=(range/4)){
     int val = i;
-    // while (val != 1) {
-    //   len++;
-    //   if ((val % 2) == 0) {
-    //     val = val / 2;  // even
-    //   } else {
-    //     val = 3 * val + 1;  // odd
-    //   }
-    //   if(localMax < len){localMax = len;}
-    // }
+    int len =  1;
+    while (val != 1) {
+      len++;
+      if ((val % 2) == 0) {
+        val = val / 2;  // even
+      } else {
+        val = 3 * val + 1;  // odd
+      }
+      if(localMax < len){localMax = len;}
+    }
   }
   if (*maxlen < localMax)atomicMax(maxlen,localMax);
 
@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
   if (range < 1) {fprintf(stderr, "error: range must be at least 1\n"); exit(-1);}
   printf("range: 1, ..., %ld\n", range);
   if ((range%4) != 0) {fprintf(stderr, "error: range must be a multiple of 4\n"); exit(-1);}
-  printf("range: 1, ..., %ld\n", range);
+ 
 
   
   // alloc space for device copies of maxlen and range
