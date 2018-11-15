@@ -37,7 +37,8 @@ static __global__ void collatzKernel(const long range, int * maxlen)
   int len = 1;
 
   if(idx <= (range/4))
-  for(int val = idx +1; val <= range; val+=(range/4))
+  for(int i = idx +1; i <= range; i+=(range/4)){
+    int val = i;
     while (val != 1) {
       len++;
       if ((val % 2) == 0) {
@@ -47,6 +48,7 @@ static __global__ void collatzKernel(const long range, int * maxlen)
       }
       if(localMax < len){localMax = len;}
     }
+  }
   if (*maxlen < localMax)atomicMax(maxlen,localMax);
 
 }
