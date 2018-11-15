@@ -38,7 +38,7 @@ static __global__ void collatzKernel(const long range, int * maxlen)
   int localMax = 0;
 
   if(idx < (range/4))
-  for(int i = my_beg; i < my_beg; i++){
+  for(int i = my_beg; i < my_end; i++){
     int val = i;
     int len = 1;
     while (val != 1) {
