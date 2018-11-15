@@ -33,14 +33,11 @@ static __global__ void collatzKernel(const long range, int * maxlen)
 {
   // compute sequence lengths
   const long idx = threadIdx.x + blockIdx.x * (long)blockDim.x;
-  //idx = idx * 4 + 1;
-  long val = idx * 4 + 1;
-  long end = (idx + 1) * 4 + 1;
   int localMax = 0;
   int len = 1;
 
-  if(val <= range)
-  for(; val < end; val++)
+  if(idx <= (range/4))
+  for(int val = idx +1; val <= range; idx+=(range/4))
     while (val != 1) {
       len++;
       if ((val % 2) == 0) {
