@@ -84,12 +84,11 @@ int main(int argc, char *argv[])
 
 
   // alloc space for host copies of a, b, c and setup input values
-  int* h_maxlen = new int;
-  *h_maxlen = 0;
+  int h_maxlen = 0;
 
 
   // copy inputs to device
-  if (cudaSuccess != cudaMemcpy(d_maxlen, h_maxlen, size, cudaMemcpyHostToDevice)) {fprintf(stderr, "copying to device failed\n"); exit(-1);}
+  if (cudaSuccess != cudaMemcpy(d_maxlen, &h_maxlen, size, cudaMemcpyHostToDevice)) {fprintf(stderr, "copying to device failed\n"); exit(-1);}
 
   // start time
   timeval start, end;
@@ -106,13 +105,12 @@ int main(int argc, char *argv[])
   CheckCuda();
 
   // copy result back to host
-  if (cudaSuccess != cudaMemcpy(h_maxlen, d_maxlen, size, cudaMemcpyDeviceToHost)) {fprintf(stderr, "copying from device failed\n"); exit(-1);}
+  if (cudaSuccess != cudaMemcpy(&h_maxlen, d_maxlen, size, cudaMemcpyDeviceToHost)) {fprintf(stderr, "copying from device failed\n"); exit(-1);}
 
   // print result
-  printf("longest sequence: %d elements\n", *h_maxlen);
+  printf("longest sequence: %d elements\n", h_maxlen);
 
   // clean up
-  delete h_maxlen;
   cudaFree(d_maxlen);
 
   return 0;
