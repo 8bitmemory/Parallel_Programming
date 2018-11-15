@@ -35,7 +35,7 @@ static __global__ void collatzKernel(const long range, int * maxlen)
   const long idx = threadIdx.x + blockIdx.x * (long)blockDim.x;
   int my_beg = (idx * 4) + 1;
   int my_end = ((idx + 1) * 4) + 1;
-  int localMax = 0;
+  int localMax = 1;
 
   if(idx < (range/4))
   for(int i = my_beg; i < my_end; i++){
@@ -52,7 +52,6 @@ static __global__ void collatzKernel(const long range, int * maxlen)
     if (localMax < len)localMax = len;
   }
   if (*maxlen < localMax)atomicMax(maxlen,localMax);
-
 }
 
 static void CheckCuda()
@@ -84,7 +83,7 @@ int main(int argc, char *argv[])
 
 
   // alloc space for host copies of a, b, c and setup input values
-  int* h_maxlen = new int;
+  int* h_maxlen;
   *h_maxlen = 0;
 
 
