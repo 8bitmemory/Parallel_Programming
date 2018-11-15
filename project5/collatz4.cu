@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
   if (argc != 2) {fprintf(stderr, "usage: %s range\n", argv[0]); exit(-1);}
   const long range = atol(argv[1]);
   if (range < 1) {fprintf(stderr, "error: range must be at least 1\n"); exit(-1);}
-  if ((range % 4) == 0) {fprintf(stderr, "error: range must be multiple of 4\n"); exit(-1);}
+  if ((range % 4) != 0) {fprintf(stderr, "error: range must be multiple of 4\n"); exit(-1);}
   printf("range: 1, ..., %ld\n", range);
 
   
