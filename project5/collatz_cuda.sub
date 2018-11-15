@@ -14,7 +14,7 @@ date
 # ./collatz_cuda 100000000
 # ./collatz_cuda 1000000000
 
-./collatz_cuda4 1000
+./collatz_cuda4 1000000
 ./collatz_cuda4 10000000
 ./collatz_cuda4 100000000
 ./collatz_cuda4 1000000000
