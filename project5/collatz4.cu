@@ -29,13 +29,13 @@ Author: Martin Burtscher
 
 static const int ThreadsPerBlock = 512;
 
-static __global__ void collatzKernel(const long range, int * maxlen)
+static __global__ void collatzKernel(const long range, int *maxlen)
 {
   // compute sequence lengths
   const long idx = threadIdx.x + blockIdx.x * (long)blockDim.x;
   int my_beg = (idx * 4) + 1;
   int my_end = ((idx + 1) * 4) + 1;
-  int localMax = 1;
+  //int localMax = 1;
 
   if(idx < (range/4)){
     for(int i = my_beg; i < my_end; i++){
@@ -49,9 +49,10 @@ static __global__ void collatzKernel(const long range, int * maxlen)
           val = 3 * val + 1;  // odd
         }
       }
-      if (localMax < len)localMax = len;
+      //if (localMax < len)localMax = len;
+      if (*maxlen < len) atomicMax(maxlen,len);
     }
-    if (*maxlen < localMax)atomicMax(maxlen,localMax);
+    
   }
 }
 
@@ -89,7 +90,7 @@ int main(int argc, char *argv[])
 
 
   // copy inputs to device
-  if (cudaSuccess != cudaMemcpy(d_maxlen, h_maxlen, size, cudaMemcpyHostToDevice)) {fprintf(stderr, "copying to device failed\n"); exit(-1);};
+  if (cudaSuccess != cudaMemcpy(d_maxlen, h_maxlen, size, cudaMemcpyHostToDevice)) {fprintf(stderr, "copying to device failed\n"); exit(-1);}
 
   // start time
   timeval start, end;
