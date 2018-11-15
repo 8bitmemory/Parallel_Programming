@@ -40,15 +40,16 @@ static __global__ void collatzKernel(int * range, int * maxlen)
   int len = 1;
 
   if(val <= *range)
-  for(val; val < end; val++)
-  while (val != 1) {
-    len++;
-    if ((val % 2) == 0) {
-      val = val / 2;  // even
-    } else {
-      val = 3 * val + 1;  // odd
+  for(val; val < end; val++){
+    while (val != 1) {
+      len++;
+      if ((val % 2) == 0) {
+        val = val / 2;  // even
+      } else {
+        val = 3 * val + 1;  // odd
+      }
+      if(localMax < len){localMax = len;}
     }
-    if(localMax < len){localMax = len;}
   }
   if (*maxlen < localMax)atomicMax(maxlen,localMax);
 
