@@ -51,7 +51,7 @@ static __global__ void collatzKernel(const long range, int * maxlen)
     }
     if (localMax < len)localMax = len;
   }
-  if (*maxlen < len)atomicMax(maxlen,len);
+  if (*maxlen < localMax)atomicMax(maxlen,localMax);
 
 }
 
