@@ -29,17 +29,16 @@ Author: Martin Burtscher
 
 static const int ThreadsPerBlock = 512;
 
-static __global__ void collatzKernel(const long range, int *maxlen)
-{
-  // compute sequence lengths
-  const long idx = threadIdx.x + blockIdx.x * (long)blockDim.x;
-  int my_beg = (idx * 4) + 1;
-  int my_end = ((idx + 1) * 4) + 1;
-  int localMax = 0;
+static __global__ void collatz(const long range, int* maxlen) {
 
-  if(idx < (range/4)){
-    for(int i = my_beg; i < my_end; i++){
-      int val = i;
+  const long idx = threadIdx.x + blockIdx.x * (long)blockDim.x;
+  const long beg = idx * 4;
+  const long end = (idx + 1) * 4;
+
+  if (idx < (range / 4)) {
+    int ml = 0;
+    for (long i = beg + 1; i <= end; i++) {
+      long val = i;
       int len = 1;
       while (val != 1) {
         len++;
@@ -49,14 +48,18 @@ static __global__ void collatzKernel(const long range, int *maxlen)
           val = 3 * val + 1;  // odd
         }
       }
-      if (localMax < len)localMax = len;
+      if (ml < len) {
+        ml = len;
+      }
     }
-    if (*maxlen < localMax) atomicMax(maxlen, localMax);    
+
+    if (*maxlen < ml) {
+      atomicMax(maxlen, ml);
+    }
   }
 }
 
-static void CheckCuda()
-{
+static void CheckCuda() {
   cudaError_t e;
   cudaDeviceSynchronize();
   if (cudaSuccess != (e = cudaGetLastError())) {
@@ -65,54 +68,47 @@ static void CheckCuda()
   }
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
+
   printf("Collatz v1.0\n");
 
   // check command line
   if (argc != 2) {fprintf(stderr, "usage: %s range\n", argv[0]); exit(-1);}
   const long range = atol(argv[1]);
   if (range < 1) {fprintf(stderr, "error: range must be at least 1\n"); exit(-1);}
-  if ((range % 4) != 0) {fprintf(stderr, "error: range must be multiple of 4\n"); exit(-1);}
+  if (range % 4 != 0) {fprintf(stderr, "error: range must be a multiple of 4\n"); exit(-1);}
   printf("range: 1, ..., %ld\n", range);
 
-  
-  // alloc space for device copies of maxlen and range
-  int* d_maxlen;
+  int maxlen;
+  int *d_maxlen;
   const int size = sizeof(int);
+
   cudaMalloc((void **)&d_maxlen, size);
 
+  maxlen = 0;
 
-  // alloc space for host copies of a, b, c and setup input values
-  int h_maxlen = 0;
-
-
-  // copy inputs to device
-  if (cudaSuccess != cudaMemcpy(d_maxlen, &h_maxlen, size, cudaMemcpyHostToDevice)) {fprintf(stderr, "copying to device failed\n"); exit(-1);}
+  if (cudaSuccess != cudaMemcpy(d_maxlen, &maxlen, size, cudaMemcpyHostToDevice)) {fprintf(stderr, "copying to device failed\n"); exit(-1);}
 
   // start time
   timeval start, end;
   gettimeofday(&start, NULL);
 
-  //launch GPU kernel
-  collatzKernel<<<(ThreadsPerBlock + (range/4) - 1)/ThreadsPerBlock,ThreadsPerBlock>>>(range, d_maxlen);
+  collatz<<<((range / 4) + ThreadsPerBlock - 1) / ThreadsPerBlock, ThreadsPerBlock>>>(range, d_maxlen);
   cudaDeviceSynchronize();
 
   // end time
   gettimeofday(&end, NULL);
   const double runtime = end.tv_sec - start.tv_sec + (end.tv_usec - start.tv_usec) / 1000000.0;
   printf("compute time: %.3f s\n", runtime);
+
   CheckCuda();
 
-  // copy result back to host
-  if (cudaSuccess != cudaMemcpy(&h_maxlen, d_maxlen, size, cudaMemcpyDeviceToHost)) {fprintf(stderr, "copying from device failed\n"); exit(-1);}
+  if (cudaSuccess != cudaMemcpy(&maxlen, d_maxlen, size, cudaMemcpyDeviceToHost)) {fprintf(stderr, "copying from device failed\n"); exit(-1);}
 
   // print result
-  printf("longest sequence: %d elements\n", h_maxlen);
+  printf("longest sequence: %d elements\n", maxlen);
 
-  // clean up
   cudaFree(d_maxlen);
 
   return 0;
 }
-
