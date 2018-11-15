@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
 
   // check command line
   if (argc != 2) {fprintf(stderr, "usage: %s range\n", argv[0]); exit(-1);}
-  const long range = atol(argv[1]);
+  const int range = atol(argv[1]);
   if (range < 1) {fprintf(stderr, "error: range must be at least 1\n"); exit(-1);}
   printf("range: 1, ..., %ld\n", range);
   if ((range%4) != 0) {fprintf(stderr, "error: range must be a multiple of 4\n"); exit(-1);}
@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
 
   // alloc space for host copies of a, b, c and setup input values
   int* h_maxlen = new int;
-  const long* h_range = new int;
+  const int* h_range = new int;
   *d_maxlen = 0;
   h_range = &range;
 
