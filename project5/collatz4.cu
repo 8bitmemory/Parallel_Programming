@@ -27,9 +27,9 @@ Author: Martin Burtscher
 #include <sys/time.h>
 #include <cuda.h>
 
-static const int ThreadsPerBlock = 512/4;
+static const int ThreadsPerBlock = 512;
 
-static __global__ void collatzKernel(int * range, int * maxlen)
+static __global__ void collatzKernel(const long range, int * maxlen)
 {
   // compute sequence lengths
   const long idx = threadIdx.x + blockIdx.x * (long)blockDim.x;
@@ -39,8 +39,8 @@ static __global__ void collatzKernel(int * range, int * maxlen)
   int localMax = 0;
   int len = 1;
 
-  if(val <= *range)
-  for(; val < end; val++){
+  if(val <= range)
+  for(; val < end; val++)
     while (val != 1) {
       len++;
       if ((val % 2) == 0) {
@@ -50,7 +50,6 @@ static __global__ void collatzKernel(int * range, int * maxlen)
       }
       if(localMax < len){localMax = len;}
     }
-  }
   if (*maxlen < localMax)atomicMax(maxlen,localMax);
 
 }
@@ -71,7 +70,7 @@ int main(int argc, char *argv[])
 
   // check command line
   if (argc != 2) {fprintf(stderr, "usage: %s range\n", argv[0]); exit(-1);}
-  const int range = atol(argv[1]);
+  const long range = atol(argv[1]);
   if (range < 1) {fprintf(stderr, "error: range must be at least 1\n"); exit(-1);}
   printf("range: 1, ..., %ld\n", range);
   if ((range%4) != 0) {fprintf(stderr, "error: range must be a multiple of 4\n"); exit(-1);}
@@ -80,29 +79,24 @@ int main(int argc, char *argv[])
   
   // alloc space for device copies of maxlen and range
   int* d_maxlen;
-  int* d_range;
   const int size = sizeof(int);
   cudaMalloc((void **)&d_maxlen, size);
-  cudaMalloc((void **)&d_range, size);
 
 
   // alloc space for host copies of a, b, c and setup input values
   int* h_maxlen = new int;
-  const int* h_range = new int;
-  *d_maxlen = 0;
-  h_range = &range;
+  *h_maxlen = 0;
+
 
   // copy inputs to device
   if (cudaSuccess != cudaMemcpy(d_maxlen, h_maxlen, size, cudaMemcpyHostToDevice)) {fprintf(stderr, "copying to device failed\n"); exit(-1);};
-  if (cudaSuccess != cudaMemcpy(d_range, h_range, size, cudaMemcpyHostToDevice)) {fprintf(stderr, "copying to device failed\n"); exit(-1);};
-  
 
   // start time
   timeval start, end;
   gettimeofday(&start, NULL);
 
   //launch GPU kernel
-  collatzKernel<<<(ThreadsPerBlock + range - 1)/ThreadsPerBlock,ThreadsPerBlock>>>(d_range, d_maxlen);
+  collatzKernel<<<(ThreadsPerBlock + (range/4) - 1)/ThreadsPerBlock,ThreadsPerBlock>>>(range, d_maxlen);
   cudaDeviceSynchronize();
 
   // end time
@@ -119,9 +113,7 @@ int main(int argc, char *argv[])
 
   // clean up
   delete h_maxlen;
-  delete h_range;
   cudaFree(d_maxlen);
-  cudaFree(d_range);
 
   return 0;
 }
