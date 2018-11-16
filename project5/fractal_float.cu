@@ -1,3 +1,4 @@
+// Elliott Esponda & Andrew Wheeler
 // (1.) Copied
 #include <cstdlib>
 #include <cmath>
