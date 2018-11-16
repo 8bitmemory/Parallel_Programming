@@ -1,0 +1,17 @@
+#!/bin/bash
+#SBATCH -A CS4380_5351_7332 # account name
+#SBATCH -J p5_fractal       # job name
+#SBATCH -o p5_fractal.%j    # name of the output and error file
+#SBATCH -N 1                # total number of nodes requested
+#SBATCH -n 1                # total number of tasks requested
+#SBATCH -p gpu              # queue name
+#SBATCH -t 00:01:00         # expected maximum runtime (hh:mm:ss)
+
+date
+
+./fractal_cuda 2048 100
+
+./fractal_float_cuda 2048 100
+
+date
+
