@@ -5,7 +5,7 @@
 #include <sys/time.h>
 #include "cs43805351.h"
 #include <cuda.h> // (2.) Done
-
+// comment
 static const double Delta = 0.004;
 static const double xMid =  0.2389;
 static const double yMid =  0.55267;
