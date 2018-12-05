@@ -1,0 +1,34 @@
+Wed Nov 14 23:14:12 CST 2018
+Collatz v1.0
+range: 1, ..., 1000000
+compute time: 0.004 s
+longest sequence: 525 elements
+Collatz v1.0
+range: 1, ..., 10000000
+compute time: 0.044 s
+longest sequence: 686 elements
+Collatz v1.0
+range: 1, ..., 100000000
+compute time: 0.479 s
+longest sequence: 950 elements
+Collatz v1.0
+range: 1, ..., 1000000000
+compute time: 5.200 s
+longest sequence: 987 elements
+Collatz v1.0
+range: 1, ..., 1000000
+compute time: 0.005 s
+longest sequence: 525 elements
+Collatz v1.0
+range: 1, ..., 10000000
+compute time: 0.051 s
+longest sequence: 686 elements
+Collatz v1.0
+range: 1, ..., 100000000
+compute time: 0.556 s
+longest sequence: 950 elements
+Collatz v1.0
+range: 1, ..., 1000000000
+compute time: 6.053 s
+longest sequence: 987 elements
+Wed Nov 14 23:14:26 CST 2018
