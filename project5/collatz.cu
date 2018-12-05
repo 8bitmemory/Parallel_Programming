@@ -21,7 +21,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Author: Martin Burtscher
 */
-
+// Elliott Esponda & Andrew Wheeler
 #include <cstdlib>
 #include <cstdio>
 #include <sys/time.h>
