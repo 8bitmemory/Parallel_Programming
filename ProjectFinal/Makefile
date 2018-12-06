@@ -1,5 +1,5 @@
 MPI=-O3 -xhost -openmp
-
+module load cuda 
 all: fractal_hyb2 C2fractal.o CUfractal.o
 	@echo done
 
