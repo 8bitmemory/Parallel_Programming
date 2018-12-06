@@ -36,6 +36,33 @@ static const double yMid =  0.55267;
 static __global__ void FractalKernel(const int start_frame, const int gpu_frames, const int width, unsigned char* pic_d)
 {
   // todo: use the GPU to compute the frames (base the code on the previous project)
+  // compute frames
+        const int pixels = frames * width * width * (start_frame + gpu_frames);
+        const int idx = threadIdx.x + blockIdx.x * blockDim.x + (start_frame * width * width);
+        if(idx < pixels)
+        { 
+          const int frame = idx / (width * width);
+          const int row = (idx / width) % width;
+          const int col = idx % width;
+          const double delta = Delta * pow(0.98, frame);
+          const double xMin = xMid - delta;
+                const double yMin = yMid - delta;
+          const double dw = 2.0 * delta / width;
+          const double cy = yMin + row * dw;
+          const double cx = xMin + col * dw;
+          double x = cx;
+          double y = cy;
+          int depth = 256;
+          double x2, y2;
+          do {
+            x2 = x * x;
+            y2 = y * y;
+            y = 2 * x * y + cy;
+            x = x2 - y2 + cx;
+            depth--;
+          } while ((depth > 0) && ((x2 + y2) < 5.0));
+          pic[frame * width * width + row * width + col] = (unsigned char)depth;
+        }
 }
 
 unsigned char* GPU_Init(const int gpu_frames, const int width)
@@ -48,9 +75,13 @@ unsigned char* GPU_Init(const int gpu_frames, const int width)
 void GPU_Exec(const int start_frame, const int gpu_frames, const int width, unsigned char* pic_d)
 {
   // todo: launch the kernel with ThreadsPerBlock and the appropriate number of blocks
+  fractalKernel<<<((gpu_frames * width * width) + ThreadsPerBlock - 1) / ThreadsPerBlock, ThreadsPerBlock>>>(start_frame, gpu_frames, width, pic_d);
 }
 
 void GPU_Fini(const int gpu_frames, const int width, unsigned char* pic, unsigned char* pic_d)
 {
   // todo: copy the result from the device to the host and free the device memory
+  const int size = gpu_frames * width * width * sizeof(unsigned char);
+  if (cudaSuccess != cudaMemcpy(pic, pic_d, size, cudaMemcpyDeviceToHost)) {fprintf(stderr, "copying from device failed\n"); exit(-1);}
+  cudaFree(pic_d);
 }
