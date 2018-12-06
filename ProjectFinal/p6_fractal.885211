@@ -74,3 +74,28 @@ TACC: Shutdown complete. Exiting.
 TACC: Starting up job 885211
 TACC: Setting up parallel environment for MVAPICH2+mpispawn.
 TACC: Starting parallel tasks...
+Fractal v1.7
+computing 80 frames of 512 by 512 fractal (64 CPU frames and 16 GPU frames)
+using 8 MPI Processes
+compute time: 1.352 s
+ 
+TACC: Shutdown complete. Exiting.
+TACC: Starting up job 885211
+TACC: Setting up parallel environment for MVAPICH2+mpispawn.
+TACC: Starting parallel tasks...
+Fractal v1.7
+computing 80 frames of 512 by 512 fractal (72 CPU frames and 8 GPU frames)
+using 8 MPI Processes
+compute time: 1.295 s
+ 
+TACC: Shutdown complete. Exiting.
+TACC: Starting up job 885211
+TACC: Setting up parallel environment for MVAPICH2+mpispawn.
+TACC: Starting parallel tasks...
+Fractal v1.7
+computing 80 frames of 512 by 512 fractal (80 CPU frames and 0 GPU frames)
+using 8 MPI Processes
+compute time: 1.725 s
+ 
+TACC: Shutdown complete. Exiting.
+Thu Dec  6 13:05:08 CST 2018
