@@ -87,15 +87,15 @@ int main(int argc, char *argv[])
   int frames = (cpu_frames + gpu_frames);
   if (frames < 1) {fprintf(stderr, "error: total number of frames must be at least 1\n"); exit(-1);}
 
- 
-  frames /= comm_size;
-  cpu_frames /= comm_size;
-  gpu_frames /= comm_size;
   
   if(my_rank==0) {
     printf("computing %d frames of %d by %d fractal (%d CPU frames and %d GPU frames)\n", frames, width, width, cpu_frames, gpu_frames);
     printf("using %d MPI Processes\n", comm_size);
   }
+  
+    frames /= comm_size;
+  cpu_frames /= comm_size;
+  gpu_frames /= comm_size;
   
   // calculate CPU and GPU start frames
   const int cpu_start_frame = my_rank * frames;
@@ -146,7 +146,7 @@ int main(int argc, char *argv[])
 
   if(my_rank == 0)
   delete [] pic;
-  
+
   delete [] my_pic;
   MPI_Finalize();
   return 0;
